@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <!--android:rotation="90"-->
+    <!--android:clickable="false"-->
+    <VerticalSeekBar
+        android:id="@+id/seekBarLeft"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_margin="10dp"
+        android:clickable="false"
+        android:layout_weight="1" />
+
+    <motion.brick.frank.martin.de.brickmotioncontrol.MotionView
+        android:id="@+id/motionView"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_margin="10dp"
+        android:layout_weight="6" />
+
+    <!--android:rotation="90"-->
+    <VerticalSeekBar
+        android:id="@+id/seekBarRight"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_margin="10dp"
+        android:clickable="false"
+        android:layout_weight="1"  />
+</LinearLayout>
