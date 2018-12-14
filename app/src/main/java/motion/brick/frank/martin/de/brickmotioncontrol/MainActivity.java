@@ -103,7 +103,7 @@ public class MainActivity extends AppCompatActivity implements MotionInputListen
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        writeToConsole(String.format("%d success %n%s",c,response.substring(0, 1024)));
+                        writeToConsole(String.format("%d success %n%s",c,response));
                         updateConnectionFlag(true);
                     }
                 }, new Response.ErrorListener() {
