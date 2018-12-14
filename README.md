@@ -27,7 +27,7 @@ he apk with gradle build. You can find the apk file under
 
 ## App usage
 
-![Image of Mobile Icon](docs/AppUI.png)
+![Image of Mobile Icon](docs/AppUi.png)
 
 ### Server config
 it's quite simply, enter the proper IP into the server textfield.
