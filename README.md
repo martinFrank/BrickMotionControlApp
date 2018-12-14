@@ -1,96 +1,72 @@
-# Motion Control Server (java)
+# Motion Control App (java)
 
 let's control our LEGO (tm) bricks with the Raspberry Pi
-controller! This projekt provides a server that can run
-onto the Raspi and offer a rest-service to control the actors
-of your LEGO (tm) construction.
+controller! This projekt provides an app that lets you easily
+control your LEGO (tm) construction.
 
-NOTE: there is an android app here have an easy-to-use
-access of the REST-API of the Motion Control Server.
+NOTE: there is an Motion Control Server here that grants you an
+easy-to-use REST-API which the app uses.
 
 ## Big Picture
 
 ![Image of Mobile Icon](docs/BigPicture.png)
 
-## Details
+The `Brick Motion Control App` takes usage of the REST API
+thus sending steering commands to the server. These steering
+signals are processed by the Raspi and the corresponding Pins
+are set.
 
-The `Motion Control Server` offers an REST API that lets you
-send steering signals to the Raspi. These steering signals are
-processed by the Raspi and the corresponding Pins are set.
-
-## how to use
+## Setup App
 you have to clone / download the project and build it. This
-project uses maven build. Once done you copy the created jar
-file (right now it should be `server-1.0-SNAPSHOT.jar`) to
-the Raspi and run it using
+project uses gradle build.
 
-`$>sudo java -jar server-1.0-SNAPSHOT.jar`
+if you use an IDE (like Eclipse or Intellij) they provide upload
+via IDE. If you don't have one of theese you'll have to create
+he apk with gradle build. You can find the apk file under
+`\app\build\outputs\apk\release`
 
-it takes some for the server to start up (10 seconds on my
-Raspi 3B+) but be patient. But when it's up you can change
-the Motion Control with this simpe HTTP-Call (any browser
-can do this for you)
+## App usage
 
-`http://localhost:8080/motion?pwma=33&pwmb=-23`
+![Image of Mobile Icon](docs/AppUI.png)
 
-this set
-- the pulse-width-modultation pin A to +33%
-- the digital pin (A left) to high;
-- the digital pin (A right) to low;
-<br>
+### Server config
+it's quite simply, enter the proper IP into the server textfield.
+this screenshot has currently `Name` as server IP written, you
+should find something better (`192.168.0.11` e.g.)
 
-- the pulse-width-modultation pin B to -23%
-- the digital pin (B left) to low;
-- the digital pin (B right) to high;
+**Note:** the server will be used to create the url for the REST-calls, as
+for this example it would be `http://Name:8080/motion?pwma=33&pwmb=-23`
+but if you had set it up properly it would be something like
+`http://192.168.0.11:8080/motion?pwma=33&pwmb=-23` The query parameters
+(33,-23) do come from the current motion you set via the touch pad
+(the circle), see below.
 
-the purpose of this is to let you control the directions
-easily and don't need too much pwm pins (only one pwm per
-motor)
+### Console
+Under the Server configuration there is a small text field, it is used
+as console to print the current events that happened.
 
-## wiring the motors
 
-![Image of Mobile Icon](docs/Wiring.png)
+### Touch pad
+The round field in the lower center is the touch pad. the further
+you go from the center the more power you send to the server. This
+layout is designed for a caterpillar like drive (as the server is set
+to caterpillar as well). You will get an optical Feedback about the
+percentage of power you send to the motion control server. The progress
+bars to the left and right show you the amout, from -100% up to 100% -
+if you don't want to move, the progress bar will be in the middle. that
+is that they don't have any power forward as well as no power backward.
 
-The wiring requires separate hardware.
-
-- AND-Gates
-- H-Bridge
-- Motors
-- Power supply
-
-You have to split the pwm signal to both ports of the H-Bridge.
-you can use AND-gates for that. Personally i run my motors
-with 7.2V but it's up to you how much you power your engines.
-
-## configuration
-
-right now the configuration is hard-coded, you'll have to
-change the programm code on yourself. It's intented to
-provide easily configuration in future releases. But right
-now we have the following configuration:
-
-- Pin A left: `RaspiPin.GPIO_04`
-- Pin A right: `RaspiPin.GPIO_05`
-- Pin A pwm: `RaspiPin.GPIO_26`
-
- <br>
-
-- Pin B left: `RaspiPin.GPIO_02`
-- Pin B right: `RaspiPin.GPIO_03`
-- Pin B pwm: `RaspiPin.GPIO_23`
-
-## dependencies
-
-- The REST service is based on the springframework
-- The Raspi pin library is based the on pi4j framework, with
- itself is depending on wiringpi project
+**Note:** if you move your finger to the top, both motors will be send
+100% forward, if you move to the very left, left motor will be 100%
+forward but right motor will be 100% backward. This will result into a
+rotation without any formward movement.
 
 
 ## Features (planned)
 
-- [ ] easy configuration
+- [ ] retrieve configuration from the server (caterpillar or wheel-based)
 
-- [ ] send current configuration back to the app
+- [ ] configure more actors (lights, flashing lights, more motors)
 
-- [ ] provide webcam support
+- [ ] retrieve video signal from raspi as well
 
